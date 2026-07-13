@@ -52,8 +52,8 @@ class MLP(nn.Module):
 
         return x
 
-u_model = MLP([1, 40, 40, 40, 40, 1], dtype=torch.float32).to(DEVICE)
-k_model = MLP([1, 40, 40, 40, 40, 1], dtype=torch.float32).to(DEVICE)
+u_model = MLP([1, 80, 80, 1], dtype=torch.float32).to(DEVICE)
+k_model = MLP([1, 80, 80, 1], dtype=torch.float32).to(DEVICE)
 
 
 leftBound = 0.0
@@ -149,8 +149,8 @@ for epoch in range(EPOCHS):
     scheduler_u.step()
 
     if (epoch+1)%500==0:
-        print(f'Epoch:{epoch}, The loss is:{loss_train.item()}, LEARNING_RATE_k: {scheduler_k.optimizer.param_groups[0]["lr"]}')
-    
+        print(f'Epoch:{epoch}, The loss is:{loss_train.item()}, The current L^2 error for k is: {error_k_list[-1]}')
+            
 k_model.eval()
 u_model.eval()
 
